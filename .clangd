@@ -1,0 +1,8 @@
+CompileFlags:
+  Add: [-xc++, -stdlib=libc++]
+  Remove: [-m*, -f*, -stdlib*, -std=gnu++2b]
+Diagnostics:
+  Suppress:
+    - 'esp_log.h'
+    - 'esp_err.h'
+    - 'machine/endian.h'

@@ -1,0 +1,8 @@
+BasedOnStyle: LLVM
+ColumnLimit: 120
+AllowShortFunctionsOnASingleLine: Empty
+PointerAlignment: Left
+AlignAfterOpenBracket: AlwaysBreak
+BinPackArguments: false
+NamespaceIndentation: All
+SeparateDefinitionBlocks: Always
