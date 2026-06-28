@@ -1,15 +1,31 @@
-# clang-analyzer-*,bugprone-*,performance-*,portability-*,modernize-*,
+# clang-analyzer-*,bugprone-*,performance-*,portability-*,modernize-*,;
 # readability-*,misc-*,-readability-magic-numbers
 
 Checks: >
-  readability-*, -readability-identifier-length, -readability-function-cognitive-complexity, -readability-magic-numbers
-
-
+  readability-*, -readability-identifier-length, -readability-function-cognitive-complexity, -readability-magic-numbers,
+  bugprone-*, performance-*, clang-analyzer-*, modernize-*, portability-*,
+  -modernize-use-trailing-return-type
 
 CheckOptions:
-  - key:             readability/IdentifierNaming.IgnoreMainLikeFunctions
+  - key:             readability-identifier-naming.IgnoreMainLikeFunctions
     value:           true
-  - key:             readability/IdentifierNaming.VariableCase
+  - key:             readability-identifier-naming.FunctionCase
     value:           CamelCase
-  - key:             readability/IdentifierNaming.FunctionCase
+  - key:             readability-identifier-naming.ClassCase
     value:           CamelCase
+  - key:             readability-identifier-naming.ClassConstexprCase
+    value:           UPPER_CASE
+  - key:             readability-identifier-naming.ConstexprVariableCase
+    value:           UPPER_CASE
+  - key:             readability-identifier-naming.ClassMemberCase
+    value:           CamelCase
+  - key:             readability-identifier-naming.ClassMemberPrefix
+    value:           m
+  - key:             readability-identifier-naming.ClassMethodCase
+    value:           CamelCase
+  - key:             readability-identifier-naming.ParameterCase
+    value:           camelBack
+  - key:             readability-identifier-naming.LocalVariableCase
+    value:           camelBack
+  - key:             readability-identifier-naming.GlobalVariableCase
+    value:           camelBack
