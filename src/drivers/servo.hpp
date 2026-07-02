@@ -14,6 +14,9 @@ private:
   const uint32_t mMaxTime;
   const float mMaxAngle;
 
+  // NOLINTNEXTLINE(modernize-avoid-c-arrays)
+  char mTag[16]{};
+
 public:
   static constexpr int PWM_PERIOD = 20; // milliseconds
 

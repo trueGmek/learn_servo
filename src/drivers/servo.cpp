@@ -3,15 +3,21 @@
 #include <esp_check.h>
 #include <esp_log.h>
 
+// TODO: THIS HAS TO BE PARAMETRIZED
 #define LEDC_CHANNEL LEDC_CHANNEL_0
+
+// TODO: THIS HAS TO BE PARAMETRIZED
 #define LEDC_TIMER LEDC_TIMER_0
 
 Servo::Servo(int pin, float maxAngle, uint32_t minTime, uint32_t maxTime)
     : mPin(pin), mMaxAngle(maxAngle), mMinTime(minTime), mMaxTime(maxTime) {
+  snprintf(mTag, sizeof(mTag), "Servo[%d]", pin);
   ESP_ERROR_CHECK(Configure());
 }
 
 esp_err_t Servo::Configure() {
+  ESP_LOGI(mTag, "Starting configuration");
+
   ledc_timer_config_t timer = {
       .speed_mode = LEDC_LOW_SPEED_MODE,
       .duty_resolution = PWM_RESOLUTION,
@@ -21,8 +27,7 @@ esp_err_t Servo::Configure() {
   };
 
   esp_err_t timerConfigRet = ledc_timer_config(&timer);
-  // TODO: MAKE A NOTE ABOUT THIS
-  ESP_RETURN_ON_ERROR(timerConfigRet, "TODO:NAME", "Found error when configuring ledc timer");
+  ESP_RETURN_ON_ERROR(timerConfigRet, mTag, "Found error when configuring ledc timer");
 
   ledc_channel_config_t channel = {
       .gpio_num = mPin,
@@ -35,7 +40,7 @@ esp_err_t Servo::Configure() {
   };
 
   esp_err_t channelConfigRet = ledc_channel_config(&channel);
-  ESP_RETURN_ON_ERROR(channelConfigRet, "TODO:NAME", "Found an error when configuring ledc channel");
+  ESP_RETURN_ON_ERROR(channelConfigRet, mTag, "Found an error when configuring ledc channel");
 
   return ESP_OK;
 }
