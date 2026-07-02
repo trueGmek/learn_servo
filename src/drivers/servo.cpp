@@ -6,7 +6,8 @@
 #define LEDC_CHANNEL LEDC_CHANNEL_0
 #define LEDC_TIMER LEDC_TIMER_0
 
-Servo::Servo(int pin, uint32_t minTime, uint32_t maxTime) : mPin(pin), mMinTime(minTime), mMaxTime(maxTime) {
+Servo::Servo(int pin, float maxAngle, uint32_t minTime, uint32_t maxTime)
+    : mPin(pin), mMaxAngle(maxAngle), mMinTime(minTime), mMaxTime(maxTime) {
   ESP_ERROR_CHECK(Configure());
 }
 
@@ -45,6 +46,11 @@ void Servo::Write(uint32_t microseconds) {
 
   ledc_set_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL, mTime);
   ledc_update_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL);
+}
+
+void Servo::Move(float angle) {
+  uint32_t pwmTime = (((mMaxTime - mMinTime) * angle) / mMaxAngle) + mMinTime;
+  Write(pwmTime);
 }
 
 // Converts pulse width in microseconds(us) to a raw LEDC duty cycle count.

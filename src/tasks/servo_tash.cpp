@@ -3,8 +3,6 @@
 
 #include <esp_log.h>
 
-#define PERIOD 20
-
 void tasks::StartServoTask() {
   BaseType_t returnValue = xTaskCreate(ServoTask, TASK_NAME, STACK_SIZE, nullptr, 2, handle);
   if (returnValue != pdPASS) {
@@ -20,13 +18,13 @@ void tasks::CancelServoTask() {
 }
 
 void ServoTask(void* pvParameters) {
-  Servo servo{18};
+  Servo servo{18, 165.0};
 
-  int increment = 10;
+  int increment = 3;
 
   while (true) {
-    for (int i = 800; i < 2200; i += increment) {
-      servo.Write(i);
+    for (int i = 0; i < 165; i += increment) {
+      servo.Move((float)i);
       vTaskDelay(pdMS_TO_TICKS(Servo::PWM_PERIOD));
     }
     vTaskDelay(pdMS_TO_TICKS(1000));
